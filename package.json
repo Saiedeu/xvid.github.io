@@ -105,4 +105,30 @@
       "bufferutil": "^4.0.8"
     }
   }
+
+
+"scripts": {
+  "dev": "NODE_ENV=development tsx server/index.ts",
+  "build": "vite build && esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist",
+  
+  // ✅ Frontend build (Vite)
+  "build:client": "vite build",
+
+  // ✅ Backend build (Express + drizzle + esbuild)
+  "build:server": "esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outfile=dist/server.js",
+
+  // ✅ Combined build (client + server)
+  "build:all": "npm run build:client && npm run build:server",
+
+  // ✅ Deploy GitHub Pages (frontend only)
+  "deploy": "gh-pages -d dist",
+
+  // ✅ Build everything + deploy frontend
+  "release": "npm run build:all && npm run deploy",
+
+  "start": "NODE_ENV=production node dist/server.js",
+  "check": "tsc",
+  "db:push": "drizzle-kit push"
+}
+
   
